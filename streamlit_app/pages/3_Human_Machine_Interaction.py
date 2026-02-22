@@ -61,14 +61,12 @@ with tab2:
     col3, col4 = st.columns([2, 1])
 
     with col3:
-        st.markdown("#### Video Feed")
         video_placeholder = st.empty()
 
     with col4:
         st.markdown("### Live Metrics")
-        mcol1, mcol2 = st.columns(2)
-        hands_metric = mcol1.empty()
-        gest_metric = mcol2.empty()
+        hands_metric = st.empty()
+        gest_metric = st.empty()
 
         hands_metric.metric("Hands Detected", "0")
         gest_metric.metric("Active Finger", "None", None)

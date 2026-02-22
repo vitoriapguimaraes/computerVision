@@ -278,10 +278,14 @@ def main():
         if cv2.waitKey(1) == 27:
             break
 
-    with open("results/text.txt", "w") as f:
+    results_dir = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "results"
+    )
+    os.makedirs(results_dir, exist_ok=True)
+    with open(os.path.join(results_dir, "text.txt"), "w") as f:
         f.write(controller.text)
 
-    cv2.imwrite("results/board.png", controller.draw_board)
+    cv2.imwrite(os.path.join(results_dir, "board.png"), controller.draw_board)
 
 
 if __name__ == "__main__":

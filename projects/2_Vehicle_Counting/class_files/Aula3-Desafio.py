@@ -4,7 +4,9 @@ import csv
 import numpy as np
 import os
 
-fp = open("Results.csv", mode="w")
+output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "outputs")
+os.makedirs(output_dir, exist_ok=True)
+fp = open(os.path.join(output_dir, "Results.csv"), mode="w")
 writer = csv.DictWriter(fp, fieldnames=["Frames", "Pixel Count"])
 writer.writeheader()
 

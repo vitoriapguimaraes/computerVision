@@ -20,11 +20,9 @@ while True:
 
     if resultado.multi_hand_landmarks:
         for marcacao_maos in resultado.multi_hand_landmarks:
-            mp_desenho.draw_landmarks(img,
-                                      marcacao_maos, 
-                                      mp_maos.HAND_CONNECTIONS)
+            mp_desenho.draw_landmarks(img, marcacao_maos, mp_maos.HAND_CONNECTIONS)
 
-    cv2.imshow('Imagem', img)
+    cv2.imshow("Imagem", img)
 
     tecla = cv2.waitKey(1)
     if tecla == 27:
