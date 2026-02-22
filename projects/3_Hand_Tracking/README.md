@@ -2,8 +2,6 @@
 
 > Projeto Python para detecção e rastreamento de mãos em tempo real, reconhecimento de gestos, teclado virtual e quadro de desenho usando OpenCV e MediaPipe. Permite interação intuitiva com o computador por gestos, incluindo controle de aplicativos e desenho virtual.
 
-![Demonstração do sistema](https://github.com/vitoriapguimaraes/Python-HandTrackingOpenCV/blob/main/results/display.gif)
-
 ## Funcionalidades Principais
 
 - Detecção e rastreamento de mãos em tempo real com MediaPipe
@@ -20,18 +18,6 @@
 - pynput
 - NumPy
 
-## Como Executar
-
-1. Clone o repositório
-2. Instale as dependências:
-   ```
-   pip install opencv-python mediapipe pynput numpy
-   ```
-3. Execute o projeto:
-   ```
-   python scripts/app.py
-   ```
-
 ## Como Usar
 
 - Use a mão direita para digitar no teclado virtual. Toque em uma tecla com o indicador para digitar. Levante apenas o mindinho direito para apagar.
@@ -44,26 +30,3 @@
   - Mão esquerda define a cor do pincel (1 dedo: azul, 2: verde, 3: vermelho, 4: borracha, todos abaixados: limpa quadro)
   - Mão direita desenha com o indicador. A distância até a câmera altera a espessura do pincel.
 - Pressione 'ESC' para sair.
-
-## Estrutura de Diretórios
-
-```
-/Python-VisaoComputacionalHandTrackingOpenCV
-├── class_files/
-├── results/
-├── scripts/
-│   ├── app.py
-│   └── teste_dedos.py
-├── README.md
-└── ...
-```
-
-## Status
-
-- ✅ Concluído
-
-> Veja as [issues abertas](https://github.com/vitoriapguimaraes/Python-HandTrackingOpenCV/issues) para sugestões de melhorias e próximos passos.
-
-## Mais Sobre Mim
-
-Acesse os arquivos disponíveis na [Pasta Documentos](https://github.com/vitoriapguimaraes/vitoriapguimaraes/tree/main/DOCUMENTOS) para mais informações sobre minhas qualificações e certificações.

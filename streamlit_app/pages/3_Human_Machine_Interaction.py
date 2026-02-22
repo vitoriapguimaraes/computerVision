@@ -67,9 +67,11 @@ with tab2:
         st.markdown("### Live Metrics")
         hands_metric = st.empty()
         gest_metric = st.empty()
+        side_metric = st.empty()
 
         hands_metric.metric("Hands Detected", "0")
-        gest_metric.metric("Active Finger", "None", None)
+        gest_metric.metric("Fingers Up", "0")
+        side_metric.metric("Hand(s) Active", "—")
 
         stop_btn = st.button("⏹️ Stop Camera", use_container_width=True)
 
@@ -90,19 +92,28 @@ with tab2:
 
             # Extract Metrics
             hands_count = len(all_hands)
-            fingers_status = "None"
+            total_fingers = 0
+            sides = []
 
-            if hands_count > 0:
-                fingers = tracker.fingers_up(all_hands[0])
-                up_count = sum(fingers)
-                fingers_status = f"{up_count} Fingers Up"
+            for hand in all_hands:
+                fingers = tracker.fingers_up(hand)
+                total_fingers += sum(fingers)
+                sides.append(hand.get("type", ""))
+
+            if hands_count == 0:
+                fingers_status = "0"
+                side_label = "—"
+            else:
+                fingers_status = str(total_fingers)
+                side_label = " & ".join(sides) if sides else "—"
 
             # Convert frame BGR to RGB for Streamlit
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             video_placeholder.image(frame_rgb, channels="RGB", use_column_width=True)
 
             hands_metric.metric("Hands Detected", str(hands_count))
-            gest_metric.metric("Active Gesture", fingers_status, None)
+            gest_metric.metric("Fingers Up", fingers_status, None)
+            side_metric.metric("Hand(s) Active", side_label, None)
 
         cap.release()
         st.rerun()
