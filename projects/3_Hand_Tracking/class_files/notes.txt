@@ -1,0 +1,54 @@
+# visão geral MediaPipe
+
+A solução conhecida como MediaPipe Hands emprega machine learning para inferir 21 pontos de referência de uma mão a partir de uma única imagem. O pipeline de ML consiste em utilizar dois modelos trabalhando em conjunto:
+
+O primeiro deles opera na imagem como um todo e localiza a região da imagem em que se encontra a mão, retornando um recorte da imagem na região encontrada.
+O segundo modelo utiliza o recorte da imagem para retornar, através de uma API, a localização dos pontos de referência da mão.
+
+A API pode ser configurada modificando os seguintes parâmetros:
+- STATIC_IMAGE_MODE: Se colocado como False, a solução trata o input como vídeo, otimizando a detecção das mãos para que não ocorra em todos os frames. Se colocado como True, a detecção é feita em todas as imagens, e é ideal para processar lotes de imagens estáticas que não têm relação entre si. O valor padrão do parâmetro é False.
+- MAX_NUM_HANDS: Número máximo de mãos a serem detectadas. O valor padrão do parâmetro é 2.
+- MODEL_COMPLEXITY: Complexidade do modelo de detecção das coordenadas. A acurácia aumenta conforme a complexidade aumenta, porém a latência (tempo de resposta) também aumenta. Os valores possíveis são 0 e 1 e o valor padrão é o 0.
+- MIN_DETECTION_CONFIDENCE: Valor de confiança mínimo do modelo de detecção da posição da mão a ser considerado. O valor é uma probabilidade de 0 a 1 e o valor padrão é 0.5.
+- MIN_TRACKING_CONFIDENCE: Valor de confiança mínimo do modelo de detecção das coordenadas da mão a ser considerado. O valor é uma probabilidade de 0 a 1 e o valor padrão é 0.5.
+
+A saída da API retorna três resultados:
+- MULTI_HAND_LANDMARKS: As coordenadas dos 21 pontos de referência das mãos com valores normalizados de 0 a 1, de acordo com o tamanho da imagem.
+- MULTI_HAND_WORLD_LANDMARKS: As coordenadas dos 21 pontos de referência das mãos com valores globais em metros, com o ponto de origem sendo o centro aproximado da mão.
+- MULTI_HANDEDNESS: Informação do lado da mão, se é direita ou esquerda, com a probabilidade estimada pelo modelo dessa informação estar correta.
+
+
+# aula 1
+Nessa aula, você aprendeu a:
+Utilizar a biblioteca OpenCV para se conectar a webcam do computador;
+Detectar as mãos em vídeos com a biblioteca MediaPipe;
+Representar visualmente pontos de referência das mãos em imagens com a solução drawing_utils;
+Fazer a conversão dos canais de cores (RGB → BGR) com o método cvtColor() para o processamento da imagem com o método process().
+
+# aula 2
+Nessa aula, você aprendeu a:
+Extrair e armazenar as coordenadas dos pontos de referência das mãos com a biblioteca mediapipe;
+Espelhar imagens utilizando a biblioteca OpenCV;
+Coletar a informação de qual é o lado da mão presente em uma imagem através do multi_handedness.
+
+# aula 3
+-> projeto de abrir e fechar aplicativos
+Nessa aula, você aprendeu a:
+Construir uma função para detectar quais dedos da mão estão levantados;
+Elaborar uma solução para abrir programas do computador utilizando a biblioteca os e a função que checa quais dedos estão levantados;
+Elaborar uma solução para encerrar processos do computador utilizando a biblioteca os e a função que checa quais dedos estão levantados.
+
+# aula 4
+-> projeto de teclado virtual
+Nessa aula, você aprendeu a:
+Utilizar a biblioteca OpenCV para representar formas geométricas e textos em imagens;
+Construir a parte visual de um teclado virtual utilizando OpenCV;
+Criar a lógica de utilização de um teclado com a linguagem Python;
+Controlar o teclado do computador utilizando a biblioteca pynput.
+
+# aula 5
+-> projeto de desenho
+Nessa aula, você aprendeu a:
+Criar uma ferramenta de desenho, utilizando o python e OpenCV, incluindo funções de apagar, alternância de espessura do pincel e armazenamento da imagem;
+Alterar cores de elementos na imagem utilizando gestos de mãos;
+Sobrepor imagens utilizando a biblioteca OpenCV.

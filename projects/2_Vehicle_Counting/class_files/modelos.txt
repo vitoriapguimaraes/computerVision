@@ -1,0 +1,55 @@
+# KNN: createBackgroundSubtractorKNN()
+
+https://docs.opencv.org/4.x/de/de1/group__video__motion.html#gac9be925771f805b6fdb614ec2292006d
+
+history=500 → comprimento da “história”, responsável pelo número de frames para acumular os pesos de todo o período de processamento. Quando o valor é muito pequeno tem maior sensibilidade a mudanças repentinas de luminosidade. Quando é muito grande pode atrapalhar no caso de termos um vídeo com muita variação de luminosidade.
+
+dist2Threshold=400 → indica o limiar de distância entre o pixel e a amostra para decidir se um pixel está próximo de um outro (plano de fundo ou objeto detectado).
+
+detectShadows=True → é o controle de detecção de sombras nos objetos. Usamos o parâmetro True para ativá-lo e False para desativá-lo. Se ativado, o tempo de processamento é maior.
+
+
+# GMG: createBackgroundSubtractorGMG()
+
+https://docs.opencv.org/4.x/d2/d55/group__bgsegm.html#gae561c9701970d0e6b35ec12bae149814
+
+initializationFrames = 120 → é o número de quadros para inicializar o modelo de fundo (120 quadros = 5s).
+
+decisionThreshold=0.8 → valor limite em que os pixels são classificados como plano de fundo ou primeiro plano. Quanto maior o valor, mais objetos perdemos na imagem. Portanto, em um valor 0.9 ou 1.0 (90% e 100%) a detecção não fica tão boa.
+
+
+# MOG: createBackgroundSubtractorMOG()
+
+https://docs.opencv.org/4.x/d2/d55/group__bgsegm.html#ga17d9525d2ad71f74d8d29c2c5e11903d
+
+history = 100 → comprimento da “história”, responsável pelo número de frames para acumular os pesos de todo o período de processamento. Quando o valor é muito pequeno tem maior sensibilidade a mudanças repentinas de luminosidade. Quando é muito grande, pode atrapalhar no caso de termos um vídeo com muita variação de luminosidade.
+
+nmixtures = 5 → número de misturas gaussianas que serão usadas. Usar um valor alto aumenta drasticamente o tempo de processamento.
+
+backgroundRatio = 0.7 → proporção de plano de fundo que será utilizado. Um valor muito baixo para esse valor pode resultar em muitos falsos positivos.
+
+noiseSigma = 0 → nível de ruído aceito pelo algoritmo. Usando o valor 0 estamos deixando com que ele decida aleatoriamente o valor utilizado.
+
+
+# MOG2: createBackgroundSubtractorMOG2()
+
+https://docs.opencv.org/4.x/de/de1/group__video__motion.html#ga2beb2dee7a073809ccec60f145b6b29c
+
+history = 500 → comprimento da “história”, responsável pelo número de frames para acumular os pesos de todo o período de processamento. Quando o valor é muito pequeno tem maior sensibilidade a mudanças repentinas de luminosidade. Quando é muito grande pode atrapalhar caso tenhamos um vídeo com muita variação de luminosidade.
+
+detectShadows=True → diferente do MOG, o MOG2 tem um controle de detecção de sombras nos objetos e usa o parâmetro True para ativá-lo e False para desativá-lo. Se ativado, o tempo de processamento é maior.
+
+varThreshold=100 → correlaciona o peso dos pixels no quadro atual com os valores do modelo. Valores mais baixos tendem a criar objetos falsos.
+
+
+# CNT: createBackgroundSubtractorCNT()
+
+https://docs.opencv.org/4.x/d2/d55/group__bgsegm.html#gab344bf148349e4cbeb3ed39efa9fbd2c
+
+minPixelStability=15 → indica o número de frames a serem aguardados antes do pixel ser marcado como estável ou como plano de fundo.
+
+useHistory =True → parecido com o history dos algoritmos anteriores, indica se estamos dando crédito para um pixel por ele ser estável por um longo período de tempo.
+
+maxPixelStability=1560 → é o crédito máximo de um pixel dentro da história. O valor recomendado é 1560 (60 segundos).
+
+isParallel=True → determina se estamos paralelizando o algoritmo.
