@@ -40,7 +40,7 @@
 3. Execute o projeto:
 
    ```bash
-   streamlit run Painel.py
+   streamlit run streamlit_app/Painel.py
    ```
 
 ## Como Usar
