@@ -3,7 +3,7 @@
 > **A fronteira da percepção computacional.**  
 > Um Centro de Operações unificado que apresenta projetos focados em processamento de imagens, detecção de objetos e reconhecimento interativo usando OpenCV, MediaPipe e Deep Learning.
 
-![Demonstração do sistema](https://github.com/vitoriapguimaraes/computerVision/blob/main/results/display.gif)
+![Demonstração do sistema](https://github.com/vitoriapguimaraes/computerVision/blob/main/streamlit_app/assets/demos/streamlit_app_painel_screen.png)
 
 ## Funcionalidades Principais
 
