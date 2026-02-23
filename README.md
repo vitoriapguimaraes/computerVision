@@ -74,7 +74,7 @@ computerVision/
 
 ## Status
 
-Em manutenção
+✅ Concluído
 
 ## Mais Sobre Mim
 
