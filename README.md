@@ -7,10 +7,10 @@
 
 ## Funcionalidades Principais
 
-- **️ Classificação de Imagens**: Classificação de imagens baseada em CNN treinada no dataset CIFAR-10.
-- **🚗 Análise de Tráfego**: Contagem automática de veículos usando algoritmos de subtração de fundo.
-- **🤚 Interação Humano-Máquina**: Interfaces sem toque utilizando detecção de pontos de referência da mão em tempo real.
-- **💤 Segurança Viária**: Detecção de fadiga de motoristas monitorando o Eye Aspect Ratio (EAR).
+- **Classificação de Imagens**: Classificação de imagens baseada em CNN treinada no dataset CIFAR-10.
+- **Análise de Tráfego**: Contagem automática de veículos usando algoritmos de subtração de fundo.
+- **Interação Humano-Máquina**: Interfaces sem toque utilizando detecção de pontos de referência da mão em tempo real.
+- **Segurança Viária**: Detecção de fadiga de motoristas monitorando o Eye Aspect Ratio (EAR).
 - **Interface Centralizada**: Todos os algoritmos rodam a partir de um único painel interativo Streamlit em estilo "CCTV".
 
 ## Tecnologias Utilizadas
@@ -74,7 +74,7 @@ computerVision/
 
 ## Status
 
-✅ Concluído
+Em manutenção
 
 ## Mais Sobre Mim
 
