@@ -1,0 +1,10 @@
+services:
+  cv-hub:
+    build: .
+    container_name: cv_hub_streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
