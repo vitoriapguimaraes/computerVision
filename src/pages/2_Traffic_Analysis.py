@@ -6,8 +6,8 @@ from utils.traffic import get_subtractor, apply_filter, get_centroid, save_uploa
 from utils.config import (
     DEMO_TRAFFIC,
     IMG_TRAFFIC_ORIGINAL,
-    get_traffic_mask_path,
     VIDEO_TRAFFIC_DEFAULT,
+    get_traffic_mask_path,
 )
 
 configure_page("Traffic Analysis", "🚗")

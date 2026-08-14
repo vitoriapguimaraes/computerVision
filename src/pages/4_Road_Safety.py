@@ -1,11 +1,10 @@
 import cv2
+import streamlit as st
 import mediapipe as mp
 import numpy as np
-import streamlit as st
-from utils.ui import configure_page, render_sidebar_info, get_image_base64
 from utils.config import DEMO_DROWSINESS
+from utils.ui import configure_page, render_sidebar_info, get_image_base64
 
-# --- MediaPipe setup (module-level) ---
 _mp_face_mesh = mp.solutions.face_mesh
 _mp_draw = mp.solutions.drawing_utils
 _mp_draw_styles = mp.solutions.drawing_styles
@@ -219,71 +218,67 @@ with tab2:
 
     with col4:
         st.markdown("### Live Metrics")
-        ear_metric = st.empty()
-        mar_metric = st.empty()
-        blink_metric = st.empty()
-        status_metric = st.empty()
+        st.info("Metrics are drawn directly on the video feed when using WebRTC.")
 
-        ear_metric.metric("EAR", "—")
-        mar_metric.metric("MAR", "—")
-        blink_metric.metric("Blinks", "0")
-        status_metric.metric("Status", "Awaiting Feed")
+    # Inform the user about WebRTC
+    st.info("The video is now streamed directly from your browser to the Docker container via WebRTC.")
 
-        stop_btn = st.button("⏹️ Stop Camera", use_container_width=True)
+    from streamlit_webrtc import webrtc_streamer, RTCConfiguration
+    import av
 
-    if start_btn:
-        cap = cv2.VideoCapture(0)
-        face_mesh = _mp_face_mesh.FaceMesh(
-            max_num_faces=1,
-            refine_landmarks=True,
-            min_detection_confidence=0.5,
-            min_tracking_confidence=0.5,
-        )
-        blink_count, closed_counter, eye_was_closed = 0, 0, False
+    RTC_CONFIGURATION = RTCConfiguration(
+        {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
+    )
 
-        while cap.isOpened() and not stop_btn:
-            ret, frame = cap.read()
-            if not ret:
-                break
+    class DrowsinessProcessor:
+        def __init__(self):
+            self.face_mesh = _mp_face_mesh.FaceMesh(
+                max_num_faces=1,
+                refine_landmarks=True,
+                min_detection_confidence=0.5,
+                min_tracking_confidence=0.5,
+            )
+            self.blink_count = 0
+            self.closed_counter = 0
+            self.eye_was_closed = False
 
-            frame = cv2.flip(frame, 1)
-            h, w, _ = frame.shape
-            results = face_mesh.process(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            ear_val, mar_val, status = 0.0, 0.0, "✅ Alert"
-
+        def recv(self, frame):
+            img = frame.to_ndarray(format="bgr24")
+            img = cv2.flip(img, 1)
+            h, w, _ = img.shape
+            
+            results = self.face_mesh.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+            
             if results.multi_face_landmarks:
                 for face_lms in results.multi_face_landmarks:
                     (
-                        frame,
+                        img,
                         ear_val,
                         mar_val,
                         status,
-                        blink_count,
-                        closed_counter,
-                        eye_was_closed,
+                        self.blink_count,
+                        self.closed_counter,
+                        self.eye_was_closed,
                     ) = _process_face(
-                        frame,
+                        img,
                         face_lms,
                         ear_threshold,
                         mar_threshold,
                         closed_frames_threshold,
                         w,
                         h,
-                        blink_count,
-                        closed_counter,
-                        eye_was_closed,
+                        self.blink_count,
+                        self.closed_counter,
+                        self.eye_was_closed,
                     )
 
-            video_placeholder.image(
-                cv2.cvtColor(frame, cv2.COLOR_BGR2RGB),
-                channels="RGB",
-                use_column_width=True,
-            )
-            ear_metric.metric("EAR", f"{ear_val:.3f}")
-            mar_metric.metric("MAR", f"{mar_val:.3f}")
-            blink_metric.metric("Blinks", str(blink_count))
-            status_metric.metric("Status", status)
+            return av.VideoFrame.from_ndarray(img, format="bgr24")
 
-        cap.release()
-        face_mesh.close()
-        st.rerun()
+    # Start the WebRTC streamer
+    webrtc_streamer(
+        key="drowsiness_detection",
+        video_processor_factory=DrowsinessProcessor,
+        rtc_configuration=RTC_CONFIGURATION,
+        media_stream_constraints={"video": True, "audio": False},
+        async_processing=True,
+    )
