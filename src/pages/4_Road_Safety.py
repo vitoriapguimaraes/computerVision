@@ -208,7 +208,6 @@ with tab2:
             help="Consecutive frames with low EAR before alerting.",
         )
 
-    start_btn = st.button("▶️ Start Camera", type="primary", use_container_width=True)
 
     st.markdown("### Analysis Results")
     col3, col4 = st.columns([2, 1])
