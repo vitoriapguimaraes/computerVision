@@ -40,6 +40,9 @@
 
 ## How to Run
 
+> ⚠️ **IMPORTANT: Use Docker!**  
+> This project uses WebRTC and PyAV for real-time browser video streaming. Installing these libraries directly on Windows via `pip` usually fails because it requires compiling C++ FFmpeg libraries. **Running via Docker is strongly recommended.**
+
 1. Clone the repository:
 
    ```bash
@@ -47,20 +50,26 @@
    cd dataScience/computerVision
    ```
 
-2. Install dependencies:
+2. **Start the Docker Container (Recommended):**
 
    ```bash
-   # It is highly recommended to create a virtual environment (venv or conda) with Python 3.10
-   pip install -r requirements.txt
+   # Ensure Docker Desktop is running on your machine
+   docker compose up --build
    ```
 
-3. Run the project:
+3. **Local Setup (Linux / Mac / Advanced Windows Users):**
+   *If you cannot use Docker, ensure you have Python 3.10 and FFmpeg development headers installed before running pip.*
 
    ```bash
+   # Create and activate virtual environment
+   python -m venv .venv
+   source .venv/bin/activate  # Or .venv\Scripts\activate on Windows
+   
+   pip install -r requirements.txt
    streamlit run streamlit_app/Painel.py
    ```
 
-**Usage:** After running the Streamlit command, the hub will automatically open in your browser at `http://localhost:8501`. Navigate through the tabs in the sidebar to access the different computer vision tools.
+**Usage:** The hub will automatically be available in your browser at `http://localhost:8501` (if running locally) or `http://127.0.0.1:8501` (if using Docker on Windows). Navigate through the tabs in the sidebar to access the different computer vision tools.
 
 ## Directory Structure
 

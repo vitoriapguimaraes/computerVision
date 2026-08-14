@@ -9,4 +9,5 @@ scikit-learn==1.4.0
 pandas==2.2.0
 seaborn
 streamlit-webrtc==0.47.0
-aiortc==1.7.0
+aiortc
+av

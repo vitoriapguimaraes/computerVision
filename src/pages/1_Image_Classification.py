@@ -1,8 +1,7 @@
 import streamlit as st
 import numpy as np
-from PIL import Image
 import plotly.express as px
-from PIL import ImageOps
+from PIL import Image, ImageOps
 from utils.ui import (
     configure_page,
     render_sidebar_info,
