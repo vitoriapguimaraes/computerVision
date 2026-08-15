@@ -118,59 +118,63 @@ def process_license_plate(img):
     
     return img, extracted_text
 
-tab1, tab2 = st.tabs(["Instructions", "Execution"])
+tab1, tab2 = st.tabs(["Instructions & Demo", "Execution"])
 
 with tab1:
-    st.markdown("### How it works")
-    st.markdown("""
-    This module performs the following pipeline on each image or frame:
-    1. **Grayscale & Blur:** Prepares the image for edge detection.
-    2. **Canny Edge Detection:** Highlights the edges of objects.
-    3. **Contour Finding:** Searches for rectangles or valid plate proportions.
-    4. **Multi-Strategy OCR:** Applies a fallback loop of computer vision filters until Tesseract extracts a valid Mercosul plate.
-    """)
-    
-    st.markdown("#### OCR Fallback Pipeline (Decision Graph)")
-    
-    import streamlit.components.v1 as components
-    
-    mermaid_code = """
-    graph TD
-        A[Crop License Plate] --> B[Upscale 3x]
-        B --> C{1. Otsu Threshold}
-        C -->|Extract Text| D{Matches Regex?}
-        D -- Yes --> E((Success!))
-        D -- No --> F{2. Blur + Otsu}
-        F -->|Extract Text| G{Matches Regex?}
-        G -- Yes --> E
-        G -- No --> H{3. Morph BlackHat}
-        H -->|Extract Text| I{Matches Regex?}
-        I -- Yes --> E
-        I -- No --> J{4. Morph TopHat}
-        J -->|Extract Text| K{Matches Regex?}
-        K -- Yes --> E
-        K -- No --> L{5. Erosion + Otsu}
-        L -->|Extract Text| M{Matches Regex?}
-        M -- Yes --> E
-        M -- No --> N{6. Grayscale Raw}
-        N -->|Extract Text| O{Matches Regex?}
-        O -- Yes --> E
-        O -- No --> P((Fallback: Longest String))
+    how_it_works = """
+This module performs the following pipeline on each image or frame:
+1. **Grayscale & Blur:** Prepares the image for edge detection.
+2. **Canny Edge Detection:** Highlights the edges of objects.
+3. **Contour Finding:** Searches for rectangles or valid plate proportions.
+4. **Multi-Strategy OCR:** Applies a fallback loop of computer vision filters until Tesseract extracts a valid Mercosul plate.
     """
     
-    components.html(
-        f"""
-        <script type="module">
-            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-            mermaid.initialize({{ startOnLoad: true, theme: 'base', themeVariables: {{ primaryColor: '#2C3E50', primaryTextColor: '#fff', primaryBorderColor: '#7C3AED', lineColor: '#3B82F6', secondaryColor: '#10B981', tertiaryColor: '#fff' }} }});
-        </script>
-        <div class="mermaid" style="display: flex; justify-content: center;">
-            {mermaid_code}
-        </div>
-        """,
-        height=550,
-        scrolling=True
-    )
+    def render_mermaid_graph():
+        st.markdown("#### OCR Fallback Pipeline (Decision Graph)")
+        
+        import streamlit.components.v1 as components
+        
+        mermaid_code = """
+        graph LR
+            A[Crop License Plate] --> B[Upscale 3x]
+            B --> C[Select Next Strategy]
+            
+            subgraph Fallback Loop
+                C --> D[Apply Filter]
+                D --> E[Tesseract OCR]
+                E --> F{Matches Regex?}
+            end
+            
+            F -- Yes --> G((Success!))
+            F -- No --> H{More Strategies?}
+            H -- Yes -->|Next| C
+            H -- No --> I((Fallback: Longest String))
+            
+            subgraph Available Strategies
+                S1[1. Otsu Threshold]
+                S2[2. Blur + Otsu]
+                S3[3. Morph BlackHat]
+                S4[4. Morph TopHat]
+                S5[5. Erosion + Otsu]
+                S6[6. Grayscale Raw]
+            end
+        """
+        
+        components.html(
+            f"""
+            <script type="module">
+                import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+                mermaid.initialize({{ startOnLoad: true, theme: 'base', themeVariables: {{ primaryColor: '#2C3E50', primaryTextColor: '#fff', primaryBorderColor: '#7C3AED', lineColor: '#3B82F6', secondaryColor: '#10B981', tertiaryColor: '#fff' }} }});
+            </script>
+            <div class="mermaid" style="display: flex; justify-content: center;">
+                {mermaid_code}
+            </div>
+            """,
+            height=550,
+            scrolling=True
+        )
+
+    render_instructions_tab(how_it_works, DEMO_LICENSE_PLATE, render_mermaid_graph)
 
 with tab2:
     st.markdown("### Input Feed")
@@ -231,14 +235,14 @@ with tab2:
         if img_array is not None:
             with col1:
                 st.markdown("#### Input Image")
-                st.image(cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB), use_column_width=True)
+                st.image(cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB), use_container_width=True)
                 
             with col2:
                 with st.spinner("Processing image..."):
                     processed_img, extracted_text = process_license_plate(img_array.copy())
                     
                     st.markdown("#### Processed Image")
-                    st.image(cv2.cvtColor(processed_img, cv2.COLOR_BGR2RGB), use_column_width=True)
+                    st.image(cv2.cvtColor(processed_img, cv2.COLOR_BGR2RGB), use_container_width=True)
                     
                     if extracted_text:
                         st.success(f"**Extracted Text:** {extracted_text}")

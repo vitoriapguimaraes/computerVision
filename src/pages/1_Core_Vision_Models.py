@@ -11,17 +11,17 @@ from streamlit_webrtc import webrtc_streamer, RTCConfiguration
 from utils.ui import (
     configure_page,
     render_sidebar_info,
-    get_image_base64,
+    render_instructions_tab
 )
 from utils.loader import load_cifar10_model, get_cifar10_class_names
-from utils.config import IMG_CIFAR10_CLASSES, DEMO_CLASSIFICATION, IMG_CIFAR10_EXAMPLES
+from utils.config import IMG_CIFAR10_CLASSES, DEMO_CLASSIFICATION, IMG_CIFAR10_EXAMPLES, MODEL_YOLO
 
 configure_page("Core Vision Models", "🧠")
 render_sidebar_info()
 
 @st.cache_resource
 def load_yolo_model():
-    return YOLO('yolov8n.pt')
+    return YOLO(MODEL_YOLO)
 
 yolo_model = load_yolo_model()
 
@@ -37,27 +37,17 @@ with main_tab1:
     tab1, tab2, tab3 = st.tabs(["Instructions & Demo", "Example Results", "Execution"])
 
     with tab1:
-        st.markdown(
-            """
-            This module uses a Convolutional Neural Network (CNN) trained on the CIFAR-10 dataset to classify images into 10 distinct categories.
-            The network analyzes the visual features of the input and returns a confidence score for each possible class.
-            """
-        )
-        st.image(Image.open(IMG_CIFAR10_CLASSES), use_column_width=True)
+        how_it_works = """
+This module uses a Convolutional Neural Network (CNN) trained on the CIFAR-10 dataset to classify images into 10 distinct categories.
+The network analyzes the visual features of the input and returns a confidence score for each possible class.
 
-        col1, col2 = st.columns(2)
-        col1.markdown("### How it works")
-        col1.markdown(
-            "Upload an image or use your camera to classify it into one of 10 categories using a Convolutional Neural Network."
-        )
-
-        with col2:
-            st.markdown("### Demo")
-            gif_b64 = get_image_base64(DEMO_CLASSIFICATION)
-            st.markdown(
-                f'<img src="{gif_b64}" width="100%" style="border-radius: 8px;">',
-                unsafe_allow_html=True,
-            )
+Upload an image or use your camera to classify it into one of 10 categories using a Convolutional Neural Network.
+        """
+        
+        def render_cifar10_classes():
+            st.image(Image.open(IMG_CIFAR10_CLASSES), use_container_width=True)
+            
+        render_instructions_tab(how_it_works, DEMO_CLASSIFICATION, render_cifar10_classes)
 
     with tab2:
         st.markdown("### Example Classifications")
@@ -194,13 +184,13 @@ with main_tab2:
     tab1, tab2 = st.tabs(["Instructions", "Execution"])
 
     with tab1:
-        st.markdown("### How it works")
-        st.markdown("""
-        This module uses **YOLOv8** (You Only Look Once), a state-of-the-art, real-time object detection system by Ultralytics.
-        The model processes each frame of your webcam feed and draws bounding boxes around 80 different classes of objects (people, cars, cups, cell phones, etc).
-        
-        > **Note:** The model is optimized to run on the CPU (using the lightweight 'Nano' architecture).
-        """)
+        how_it_works = """
+This module uses **YOLOv8** (You Only Look Once), a state-of-the-art, real-time object detection system by Ultralytics.
+The model processes each frame of your webcam feed and draws bounding boxes around 80 different classes of objects (people, cars, cups, cell phones, etc).
+
+> **Note:** The model is optimized to run on the CPU (using the lightweight 'Nano' architecture).
+        """
+        render_instructions_tab(how_it_works)
 
     with tab2:
         st.info("The video is streamed directly from your browser to the Docker container via WebRTC.")
