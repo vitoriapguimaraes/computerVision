@@ -22,7 +22,7 @@ DEMO_TRAFFIC = str(DEMOS_DIR / "Vehicle_Counting_display_opt.gif")
 DEMO_TRACKING = str(DEMOS_DIR / "Hand_Tracking_display_opt.gif")
 DEMO_LANE_DETECTION = str(DEMOS_DIR / "highway_lane_detection_opt.gif")
 DEMO_DROWSINESS = str(DEMOS_DIR / "Driver_Drowsiness_Detection_display_opt.gif")
-DEMO_LICENSE_PLATE = str(ASSETS_DIR / "demo_license_plate.jpg")
+DEMO_LICENSE_PLATE = str(DEMOS_DIR / "demo_license_plate.jpg")
 
 # Image Classification specific
 IMG_CIFAR10_CLASSES = str(ASSETS_DIR / "cifar_images" / "cifar10_classes_1_line.jpg")
