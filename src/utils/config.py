@@ -23,7 +23,7 @@ DEMO_TRACKING = str(DEMOS_DIR / "Hand_Tracking_display_opt.gif")
 DEMO_DROWSINESS = str(DEMOS_DIR / "Driver_Drowsiness_Detection_display_opt.gif")
 
 # Image Classification specific
-IMG_CIFAR10_CLASSES = str(ASSETS_DIR / "cifar10_classes_1_line.jpg")
+IMG_CIFAR10_CLASSES = str(ASSETS_DIR / "cifar_images" / "cifar10_classes_1_line.jpg")
 IMG_CIFAR10_EXAMPLES = [
     str(ASSETS_DIR / "examples_image_classification" / "image-entry.jpg"),
     str(ASSETS_DIR / "examples_image_classification" / "image-entry1.jpg"),
@@ -39,7 +39,7 @@ def get_traffic_mask_path(algo: str) -> str:
     return str(TRAFFIC_ALGO_COMPARISONS_DIR / f"{algo}_mask.jpg")
 
 
-VIDEO_TRAFFIC_DEFAULT = str(ASSETS_DIR / "Ponte.mp4")
+VIDEO_TRAFFIC_DEFAULT = str(ASSETS_DIR / "traffic_videos" / "bridge.mp4")
 
 # Models
 MODEL_CIFAR10 = str(MODELS_DIR / "cifar10_cnn.h5")
