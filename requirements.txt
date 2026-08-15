@@ -13,3 +13,4 @@ streamlit-webrtc
 aiortc
 av
 ultralytics
+pytesseract

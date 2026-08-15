@@ -20,6 +20,8 @@ RUN apt-get update && apt-get install -y \
     libswscale-dev \
     libswresample-dev \
     libavfilter-dev \
+    tesseract-ocr \
+    tesseract-ocr-por \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file into the container
