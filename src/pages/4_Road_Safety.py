@@ -1,13 +1,24 @@
 import cv2
 import streamlit as st
-import mediapipe as mp
 import numpy as np
-from utils.config import DEMO_DROWSINESS
-from utils.ui import configure_page, render_sidebar_info, get_image_base64
+from settings.config import DEMO_DROWSINESS
+from utils.ui import configure_page, render_sidebar_info, get_image_base64, render_instructions_tab
 
-_mp_face_mesh = mp.solutions.face_mesh
-_mp_draw = mp.solutions.drawing_utils
-_mp_draw_styles = mp.solutions.drawing_styles
+configure_page("Road Safety", "🛣️")
+render_sidebar_info()
+
+st.title("Road Safety (Driver Drowsiness)")
+st.markdown("Real-time fatigue monitoring using EAR/MAR tracking.")
+
+@st.cache_resource(show_spinner="Loading MediaPipe FaceMesh Model...")
+def load_mediapipe():
+    import mediapipe as mp
+    _mp_face_mesh = mp.solutions.face_mesh
+    _mp_draw = mp.solutions.drawing_utils
+    _mp_draw_styles = mp.solutions.drawing_styles
+    return mp, _mp_face_mesh, _mp_draw, _mp_draw_styles
+
+mp, _mp_face_mesh, _mp_draw, _mp_draw_styles = load_mediapipe()
 
 _LEFT_EYE = [362, 385, 387, 263, 373, 380]
 _RIGHT_EYE = [33, 160, 158, 133, 153, 144]
@@ -128,54 +139,36 @@ def _process_face(
 
 
 # --- Page layout ---
-configure_page("CV Hub | Road Safety", "💤")
-render_sidebar_info()
-
-st.title("💤 Road Safety (Fatigue Detection)")
-st.markdown(
-    "Driver safety system tracking Eye Aspect Ratio (EAR) to prevent microsleep events."
-)
 
 tab1, tab2 = st.tabs(["Instructions & Demo", "Execution"])
 
 with tab1:
-    col1, col2 = st.columns(2)
-    col1.markdown("### How it works")
-    col1.markdown(
-        """
-        This module monitors driver fatigue using **MediaPipe FaceMesh** to detect facial landmarks.
-        It calculates two key metrics in real-time:
+    how_it_works = """
+This module monitors driver fatigue using **MediaPipe FaceMesh** to detect facial landmarks.
+It calculates two key metrics in real-time:
 
-        - **EAR (Eye Aspect Ratio):** Measures eye openness. When EAR drops below a threshold
-          for a sustained period, the system triggers a fatigue alert.
-        - **MAR (Mouth Aspect Ratio):** Detects yawning by measuring mouth openness.
-        - **Blink Counter:** Tracks blink frequency as an additional fatigue indicator.
-        """
-    )
+- **EAR (Eye Aspect Ratio):** Measures eye openness. When EAR drops below a threshold
+  for a sustained period, the system triggers a fatigue alert.
+- **MAR (Mouth Aspect Ratio):** Detects yawning by measuring mouth openness.
+- **Blink Counter:** Tracks blink frequency as an additional fatigue indicator.
+    """
+    
+    def render_formulas():
+        st.markdown("### EAR & MAR Formulas")
 
-    with col2:
-        st.markdown("### Demo")
-        gif_b64 = get_image_base64(DEMO_DROWSINESS)
-        st.markdown(
-            f'<img src="{gif_b64}" width="100%" style="border-radius: 8px;">',
-            unsafe_allow_html=True,
+        st.markdown("**Eye Aspect Ratio (EAR)**")
+        col3, col4 = st.columns(2)
+        col3.code("EAR = (|p2-p6| + |p3-p5|) / (2 * |p1-p4|)")
+        col4.caption(
+            "Where p1–p6 are the 6 eye landmark coordinates. EAR ≈ 0.3 when open, drops to 0 when fully closed."
         )
 
-    st.markdown("### EAR & MAR Formulas")
-
-    st.markdown("**Eye Aspect Ratio (EAR)**")
-    col3, col4 = st.columns(2)
-    col3.code("EAR = (|p2-p6| + |p3-p5|) / (2 * |p1-p4|)")
-    col4.caption(
-        "Where p1–p6 are the 6 eye landmark coordinates. EAR ≈ 0.3 when open, drops to 0 when fully closed."
-    )
-
-    st.markdown("**Mouth Aspect Ratio (MAR)**")
-    col5, col6 = st.columns(2)
-    col5.code("MAR = (|p2-p8| + |p3-p7| + |p4-p6|) / (2 * |p1-p5|)")
-    col6.caption(
-        "Where p1–p8 are the 8 mouth contour landmarks. High MAR indicates a yawn."
-    )
+        st.markdown("**Mouth Aspect Ratio (MAR)**")
+        col5, col6 = st.columns(2)
+        col5.code("MAR = |p2-p8| / |p1-p5|")
+        col6.caption("Where p1–p8 are the mouth landmark coordinates.")
+        
+    render_instructions_tab(how_it_works, DEMO_DROWSINESS, render_formulas)
 
 with tab2:
     st.markdown("### Input Feed")

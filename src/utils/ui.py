@@ -117,3 +117,26 @@ def cctv_card(title, image_path, link_text="View Feed"):
     </div>
     """
     st.markdown(html, unsafe_allow_html=True)
+
+
+def render_instructions_tab(how_it_works_md: str, demo_image_path: str = None, extra_components_func=None):
+    """Renders a standardized Instructions & Demo layout across all pages."""
+    if demo_image_path:
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("### How it works")
+            st.markdown(how_it_works_md)
+        with col2:
+            st.markdown("### Demo")
+            with st.spinner("Loading demo animation..."):
+                b64_src = get_image_base64(demo_image_path)
+                st.markdown(
+                    f'<img src="{b64_src}" width="100%" style="border-radius: 8px;">',
+                    unsafe_allow_html=True,
+                )
+    else:
+        st.markdown("### How it works")
+        st.markdown(how_it_works_md)
+
+    if extra_components_func:
+        extra_components_func()

@@ -4,52 +4,49 @@ import streamlit as st
 from utils.ui import (
     configure_page,
     render_sidebar_info,
-    get_image_base64,
+    render_instructions_tab
 )
 from streamlit_webrtc import webrtc_streamer, RTCConfiguration
-from utils.config import DEMO_TRACKING
-from utils.hand_tracking import HandTracker
+from settings.config import DEMO_TRACKING
 
 configure_page("Gesture Tracking", "🤚")
 render_sidebar_info()
 
-st.title("🤚 Human-Machine Interaction (Hand Tracking)")
+st.title("Human-Machine Interaction (Hand Tracking)")
 st.markdown(
     "Real-time hand landmark detection using MediaPipe for touchless interfaces."
 )
 
+@st.cache_resource(show_spinner="Loading MediaPipe Hand Tracking Model...")
+def load_hand_tracker():
+    from utils.hand_tracking import HandTracker
+    return HandTracker()
+
+# Pre-load the model into memory (will show a spinner on first run)
+_ = load_hand_tracker()
+
 tab1, tab2 = st.tabs(["Instructions & Demo", "Execution"])
 
 with tab1:
-    st.markdown(
-        "This module uses Google's MediaPipe framework to detect hand landmarks in real-time. It maps 21 3D coordinates across the hand, allowing for complex gesture recognition and touchless interfaces."
-    )
+    how_it_works = """
+This module uses Google's MediaPipe framework to detect hand landmarks in real-time. It maps 21 3D coordinates across the hand, allowing for complex gesture recognition and touchless interfaces.
 
-    col1, col2 = st.columns(2)
-    col1.markdown("### How it works")
-    col1.markdown(
-        "The MediaPipe Hands solution utilizes an ML pipeline consisting of multiple models working together: A palm detection model that operates on the full image and returns an oriented hand bounding box."
-    )
-    col1.markdown(
-        "A hand landmark model that operates on the cropped image region defined by the palm detector and returns high-fidelity 3D hand keypoints."
-    )
+The MediaPipe Hands solution utilizes an ML pipeline consisting of multiple models working together: A palm detection model that operates on the full image and returns an oriented hand bounding box.
 
-    with col2:
-        st.markdown("### Demo")
-        gif_b64 = get_image_base64(DEMO_TRACKING)
+A hand landmark model that operates on the cropped image region defined by the palm detector and returns high-fidelity 3D hand keypoints.
+    """
+    
+    def render_gestures():
+        st.markdown("### Gestures & Commands (Local Script)")
         st.markdown(
-            f'<img src="{gif_b64}" width="100%" style="border-radius: 8px;">',
-            unsafe_allow_html=True,
+            """
+            - **Type text:** Use right hand. Touch virtual keys with index finger to type. To erase, raise only the right pinky.
+            - **Open apps (left hand):** Index up opens Word. Index + middle up opens Excel. Index + middle + ring up opens Firefox. All fingers down closes Firefox.
+            - **Draw (two hands):** Left hand sets brush color (1 up: blue, 2 up: green, 3 up: red, 4 up: eraser). Right hand draws with index finger. Right hand distance to camera controls brush thickness.
+            """
         )
 
-    st.markdown("### Gestures & Commands (Local Script)")
-    st.markdown(
-        """
-        - **Type text:** Use right hand. Touch virtual keys with index finger to type. To erase, raise only the right pinky.
-        - **Open apps (left hand):** Index up opens Word. Index + middle up opens Excel. Index + middle + ring up opens Firefox. All fingers down closes Firefox.
-        - **Draw (two hands):** Left hand sets brush color (1 up: blue, 2 up: green, 3 up: red, 4 up: eraser). Right hand draws with index finger. Right hand distance to camera controls brush thickness.
-        """
-    )
+    render_instructions_tab(how_it_works, DEMO_TRACKING, render_gestures)
 
 with tab2:
     st.markdown("### Input Feed")
@@ -65,7 +62,7 @@ with tab2:
 
     class HandTrackingProcessor:
         def __init__(self):
-            self.tracker = HandTracker()
+            self.tracker = load_hand_tracker()
             self.canvas = None
             self.xp, self.yp = 0, 0
             self.brush_thickness = 15

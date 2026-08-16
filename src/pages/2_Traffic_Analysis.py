@@ -1,9 +1,9 @@
 import streamlit as st
 import cv2
 from PIL import Image
-from utils.ui import configure_page, render_sidebar_info, get_image_base64
+from utils.ui import configure_page, render_sidebar_info, get_image_base64, render_instructions_tab
 from utils.traffic import get_subtractor, apply_filter, get_centroid, save_uploaded_file
-from utils.config import (
+from settings.config import (
     DEMO_TRAFFIC,
     IMG_TRAFFIC_ORIGINAL,
     VIDEO_TRAFFIC_DEFAULT,
@@ -13,7 +13,7 @@ from utils.config import (
 configure_page("Traffic Analysis", "🚗")
 render_sidebar_info()
 
-st.title("🚗 Traffic Analysis (Vehicle Counting)")
+st.title("Traffic Analysis (Vehicle Counting)")
 st.markdown(
     "Automated traffic flow monitoring and vehicle counting using OpenCV background subtraction."
 )
@@ -21,23 +21,12 @@ st.markdown(
 tab1, tab2, tab3 = st.tabs(["Instructions & Demo", "Algorithm Comparison", "Execution"])
 
 with tab1:
-    st.markdown(
-        "This module uses OpenCV background subtraction (MOG2) to detect moving vehicles in a video stream. It draws bounding boxes around detected objects and counts them as they cross a defined virtual line."
-    )
+    how_it_works = """
+This module uses OpenCV background subtraction (MOG2) to detect moving vehicles in a video stream. It draws bounding boxes around detected objects and counts them as they cross a defined virtual line.
 
-    col1, col2 = st.columns(2)
-    col1.markdown("### How it works")
-    col1.markdown(
-        "The system subtracts the background of a static video feed. Contours larger than a specific area are considered vehicles. Once their center crosses the imaginary line, the counter increments."
-    )
-
-    with col2:
-        st.markdown("### Demo")
-        gif_b64 = get_image_base64(DEMO_TRAFFIC)
-        st.markdown(
-            f'<img src="{gif_b64}" width="100%" style="border-radius: 8px;">',
-            unsafe_allow_html=True,
-        )
+The system subtracts the background of a static video feed. Contours larger than a specific area are considered vehicles. Once their center crosses the imaginary line, the counter increments.
+    """
+    render_instructions_tab(how_it_works, DEMO_TRAFFIC)
 
 with tab2:
     st.markdown("### Algorithm Comparison")

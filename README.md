@@ -58,13 +58,13 @@
    ```
 
 3. **Local Setup (Linux / Mac / Advanced Windows Users):**
-   *If you cannot use Docker, ensure you have Python 3.10 and FFmpeg development headers installed before running pip.*
+   _If you cannot use Docker, ensure you have Python 3.10 and FFmpeg development headers installed before running pip._
 
    ```bash
    # Create and activate virtual environment
    python -m venv .venv
    source .venv/bin/activate  # Or .venv\Scripts\activate on Windows
-   
+
    pip install -r requirements.txt
    streamlit run streamlit_app/Painel.py
    ```
