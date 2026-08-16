@@ -11,8 +11,8 @@ IMG_PREVIEW_CLASSIFICATION = str(DEMOS_DIR / "image_classification_cifar10_displ
 IMG_PREVIEW_TRAFFIC = str(DEMOS_DIR / "vehicle_counting_display_preview.jpg")
 IMG_PREVIEW_TRACKING = str(DEMOS_DIR / "hand_tracking_display_preview.jpg")
 IMG_PREVIEW_DROWSINESS = str(DEMOS_DIR / "driver_drowsiness_detection_display_preview.jpg")
-IMG_PREVIEW_LICENSE_PLATE_READING = str(DEMOS_DIR / "reading_licence_plate_creative.jpg")
-IMG_PREVIEW_FACE_ANALYSIS = str(DEMOS_DIR / "reading_licence_plate_creative.jpg")
+IMG_PREVIEW_LICENSE_PLATE_READING = str(DEMOS_DIR / "reading_licence_plate_display_example.png")
+IMG_PREVIEW_FACE_ANALYSIS = str(DEMOS_DIR / "reading_licence_plate_display_example.png")
 
 # Demos (GIFs)
 DEMO_CLASSIFICATION = str(DEMOS_DIR / "image_classification_cifar10_display_opt.gif")
