@@ -37,7 +37,7 @@ with tab2:
 
     col1, col2 = st.columns([1, 2])
     col1.markdown("#### Frame 50")
-    col1.image(Image.open(IMG_TRAFFIC_ORIGINAL), use_column_width=True)
+    col1.image(Image.open(IMG_TRAFFIC_ORIGINAL), use_container_width=True)
 
     col2.markdown("#### Detected Masks")
     mask_cols = col2.columns(5)
@@ -48,7 +48,7 @@ with tab2:
             st.image(
                 Image.open(get_traffic_mask_path(algo)),
                 caption=algo,
-                use_column_width=True,
+                use_container_width=True,
                 clamp=True,
             )
 

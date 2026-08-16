@@ -1,13 +1,23 @@
 import cv2
 import streamlit as st
-import mediapipe as mp
 import numpy as np
 from utils.config import DEMO_DROWSINESS
 from utils.ui import configure_page, render_sidebar_info, get_image_base64, render_instructions_tab
 
-_mp_face_mesh = mp.solutions.face_mesh
-_mp_draw = mp.solutions.drawing_utils
-_mp_draw_styles = mp.solutions.drawing_styles
+configure_page("Road Safety", "🛣️")
+render_sidebar_info()
+st.title("🛣️ Road Safety (Driver Drowsiness)")
+st.markdown("Real-time fatigue monitoring using EAR/MAR tracking.")
+
+@st.cache_resource(show_spinner="Loading MediaPipe FaceMesh Model...")
+def load_mediapipe():
+    import mediapipe as mp
+    _mp_face_mesh = mp.solutions.face_mesh
+    _mp_draw = mp.solutions.drawing_utils
+    _mp_draw_styles = mp.solutions.drawing_styles
+    return mp, _mp_face_mesh, _mp_draw, _mp_draw_styles
+
+mp, _mp_face_mesh, _mp_draw, _mp_draw_styles = load_mediapipe()
 
 _LEFT_EYE = [362, 385, 387, 263, 373, 380]
 _RIGHT_EYE = [33, 160, 158, 133, 153, 144]
@@ -128,13 +138,6 @@ def _process_face(
 
 
 # --- Page layout ---
-configure_page("CV Hub | Road Safety", "💤")
-render_sidebar_info()
-
-st.title("💤 Road Safety (Fatigue Detection)")
-st.markdown(
-    "Driver safety system tracking Eye Aspect Ratio (EAR) to prevent microsleep events."
-)
 
 tab1, tab2 = st.tabs(["Instructions & Demo", "Execution"])
 

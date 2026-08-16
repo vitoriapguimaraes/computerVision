@@ -8,7 +8,6 @@ from utils.ui import (
 )
 from streamlit_webrtc import webrtc_streamer, RTCConfiguration
 from utils.config import DEMO_TRACKING
-from utils.hand_tracking import HandTracker
 
 configure_page("Gesture Tracking", "🤚")
 render_sidebar_info()
@@ -17,6 +16,14 @@ st.title("🤚 Human-Machine Interaction (Hand Tracking)")
 st.markdown(
     "Real-time hand landmark detection using MediaPipe for touchless interfaces."
 )
+
+@st.cache_resource(show_spinner="Loading MediaPipe Hand Tracking Model...")
+def load_hand_tracker():
+    from utils.hand_tracking import HandTracker
+    return HandTracker()
+
+# Pre-load the model into memory (will show a spinner on first run)
+_ = load_hand_tracker()
 
 tab1, tab2 = st.tabs(["Instructions & Demo", "Execution"])
 
@@ -55,7 +62,7 @@ with tab2:
 
     class HandTrackingProcessor:
         def __init__(self):
-            self.tracker = HandTracker()
+            self.tracker = load_hand_tracker()
             self.canvas = None
             self.xp, self.yp = 0, 0
             self.brush_thickness = 15

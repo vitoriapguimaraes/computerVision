@@ -5,7 +5,6 @@ import numpy as np
 import plotly.express as px
 from PIL import Image, ImageOps
 
-from ultralytics import YOLO
 from streamlit_webrtc import webrtc_streamer, RTCConfiguration
 
 from utils.ui import (
@@ -19,14 +18,15 @@ from utils.config import IMG_CIFAR10_CLASSES, DEMO_CLASSIFICATION, IMG_CIFAR10_E
 configure_page("Core Vision Models", "🧠")
 render_sidebar_info()
 
-@st.cache_resource
+st.title("🧠 Core Vision Models")
+st.markdown("Compare foundational image classification (CIFAR-10) with state-of-the-art real-time object detection (YOLOv8).")
+
+@st.cache_resource(show_spinner="Loading YOLOv8 Model...")
 def load_yolo_model():
+    from ultralytics import YOLO
     return YOLO(MODEL_YOLO)
 
 yolo_model = load_yolo_model()
-
-st.title("🧠 Core Vision Models")
-st.markdown("Compare foundational image classification (CIFAR-10) with state-of-the-art real-time object detection (YOLOv8).")
 
 main_tab1, main_tab2 = st.tabs(["🖼️ Image Classification (CIFAR-10)", "👁️ Object Detection (YOLOv8)"])
 
@@ -70,7 +70,7 @@ Upload an image or use your camera to classify it into one of 10 categories usin
                         img_display = ImageOps.fit(
                             img, (400, 300), Image.Resampling.LANCZOS
                         )
-                        st.image(img_display, use_column_width=True)
+                        st.image(img_display, use_container_width=True)
 
                         img_resized = img.resize((32, 32))
                         if img_resized.mode != "RGB":
@@ -133,7 +133,7 @@ Upload an image or use your camera to classify it into one of 10 categories usin
             )
         elif image_file is not None:
             image = Image.open(image_file)
-            col3.image(image, caption="Input Image", use_column_width=True)
+            col3.image(image, caption="Input Image", use_container_width=True)
 
             with col4:
                 with st.spinner("Analyzing image features..."):
