@@ -12,7 +12,7 @@ from settings.config import DEMO_TRACKING
 configure_page("Gesture Tracking", "🤚")
 render_sidebar_info()
 
-st.title("🤚 Human-Machine Interaction (Hand Tracking)")
+st.title("Human-Machine Interaction (Hand Tracking)")
 st.markdown(
     "Real-time hand landmark detection using MediaPipe for touchless interfaces."
 )

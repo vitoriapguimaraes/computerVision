@@ -13,7 +13,7 @@ from settings.config import (
 configure_page("Traffic Analysis", "🚗")
 render_sidebar_info()
 
-st.title("🚗 Traffic Analysis (Vehicle Counting)")
+st.title("Traffic Analysis (Vehicle Counting)")
 st.markdown(
     "Automated traffic flow monitoring and vehicle counting using OpenCV background subtraction."
 )

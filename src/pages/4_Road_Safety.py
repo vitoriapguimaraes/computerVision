@@ -6,7 +6,8 @@ from utils.ui import configure_page, render_sidebar_info, get_image_base64, rend
 
 configure_page("Road Safety", "🛣️")
 render_sidebar_info()
-st.title("🛣️ Road Safety (Driver Drowsiness)")
+
+st.title("Road Safety (Driver Drowsiness)")
 st.markdown("Real-time fatigue monitoring using EAR/MAR tracking.")
 
 @st.cache_resource(show_spinner="Loading MediaPipe FaceMesh Model...")

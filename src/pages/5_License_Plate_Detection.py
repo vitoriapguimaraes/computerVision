@@ -4,6 +4,7 @@ import av
 import streamlit as st
 import pytesseract
 import numpy as np
+import re
 from PIL import Image
 from streamlit_webrtc import webrtc_streamer, RTCConfiguration
 
@@ -13,13 +14,11 @@ from settings.config import IMG_PREVIEW_LICENSE_PLATE_READING
 configure_page("License Plate Detection", "🚗")
 render_sidebar_info()
 
-st.title("🚗 License Plate Text Detection (OCR)")
+st.title("License Plate Text Detection (OCR)")
 st.markdown("Extraction of characters from license plates using OpenCV contour detection and Tesseract OCR.")
 
 # Try to optimize Tesseract for short alphanumeric text
 CUSTOM_CONFIG = r'--oem 3 --psm 7 -c tessedit_char_whitelist=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-'
-
-import re
 
 def process_license_plate(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
