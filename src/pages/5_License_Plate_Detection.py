@@ -7,7 +7,8 @@ import numpy as np
 from PIL import Image
 from streamlit_webrtc import webrtc_streamer, RTCConfiguration
 
-from utils.ui import configure_page, render_sidebar_info
+from utils.ui import (configure_page, render_sidebar_info, render_instructions_tab)
+from settings.config import IMG_PREVIEW_LICENSE_PLATE_READING
 
 configure_page("License Plate Detection", "🚗")
 render_sidebar_info()
@@ -174,7 +175,7 @@ This module performs the following pipeline on each image or frame:
             scrolling=True
         )
 
-    render_instructions_tab(how_it_works, DEMO_LICENSE_PLATE, render_mermaid_graph)
+    render_instructions_tab(how_it_works, IMG_PREVIEW_LICENSE_PLATE_READING, render_mermaid_graph)
 
 with tab2:
     st.markdown("### Input Feed")
@@ -235,14 +236,14 @@ with tab2:
         if img_array is not None:
             with col1:
                 st.markdown("#### Input Image")
-                st.image(cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB), use_container_width=True)
+                st.image(cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB), use_column_width=True)
                 
             with col2:
                 with st.spinner("Processing image..."):
                     processed_img, extracted_text = process_license_plate(img_array.copy())
                     
                     st.markdown("#### Processed Image")
-                    st.image(cv2.cvtColor(processed_img, cv2.COLOR_BGR2RGB), use_container_width=True)
+                    st.image(cv2.cvtColor(processed_img, cv2.COLOR_BGR2RGB), use_column_width=True)
                     
                     if extracted_text:
                         st.success(f"**Extracted Text:** {extracted_text}")

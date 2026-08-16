@@ -128,11 +128,12 @@ def render_instructions_tab(how_it_works_md: str, demo_image_path: str = None, e
             st.markdown(how_it_works_md)
         with col2:
             st.markdown("### Demo")
-            b64_src = get_image_base64(demo_image_path)
-            st.markdown(
-                f'<img src="{b64_src}" width="100%" style="border-radius: 8px;">',
-                unsafe_allow_html=True,
-            )
+            with st.spinner("Loading demo animation..."):
+                b64_src = get_image_base64(demo_image_path)
+                st.markdown(
+                    f'<img src="{b64_src}" width="100%" style="border-radius: 8px;">',
+                    unsafe_allow_html=True,
+                )
     else:
         st.markdown("### How it works")
         st.markdown(how_it_works_md)

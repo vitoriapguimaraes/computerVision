@@ -1,11 +1,13 @@
 import streamlit as st
 
 from utils.ui import configure_page, render_sidebar_info, cctv_card
-from utils.config import (
+from settings.config import (
     IMG_PREVIEW_CLASSIFICATION,
     IMG_PREVIEW_TRAFFIC,
     IMG_PREVIEW_TRACKING,
     IMG_PREVIEW_DROWSINESS,
+    IMG_PREVIEW_LICENSE_PLATE_READING,
+    IMG_PREVIEW_FACE_ANALYSIS,
 )
 
 # Configure Page
@@ -37,6 +39,11 @@ with st.spinner("⏳ Estabelecendo conexão com as câmeras de segurança..."):
             image_path=IMG_PREVIEW_TRACKING,
         )
 
+        cctv_card(
+            title="📍 CAM 05: License Plate Detection",
+            image_path=IMG_PREVIEW_LICENSE_PLATE_READING,
+        )
+
     with col2:
         cctv_card(
             title="📍 CAM 02: Traffic Analysis",
@@ -46,4 +53,9 @@ with st.spinner("⏳ Estabelecendo conexão com as câmeras de segurança..."):
         cctv_card(
             title="📍 CAM 04: Biometric Monitoring",
             image_path=IMG_PREVIEW_DROWSINESS,
+        )
+
+        cctv_card(
+            title="📍 CAM 06: Face Analysis",
+            image_path=IMG_PREVIEW_FACE_ANALYSIS,
         )

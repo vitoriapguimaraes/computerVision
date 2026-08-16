@@ -3,7 +3,7 @@ import cv2
 from PIL import Image
 from utils.ui import configure_page, render_sidebar_info, get_image_base64, render_instructions_tab
 from utils.traffic import get_subtractor, apply_filter, get_centroid, save_uploaded_file
-from utils.config import (
+from settings.config import (
     DEMO_TRAFFIC,
     IMG_TRAFFIC_ORIGINAL,
     VIDEO_TRAFFIC_DEFAULT,
@@ -37,7 +37,7 @@ with tab2:
 
     col1, col2 = st.columns([1, 2])
     col1.markdown("#### Frame 50")
-    col1.image(Image.open(IMG_TRAFFIC_ORIGINAL), use_container_width=True)
+    col1.image(Image.open(IMG_TRAFFIC_ORIGINAL), use_column_width=True)
 
     col2.markdown("#### Detected Masks")
     mask_cols = col2.columns(5)
@@ -48,7 +48,7 @@ with tab2:
             st.image(
                 Image.open(get_traffic_mask_path(algo)),
                 caption=algo,
-                use_container_width=True,
+                use_column_width=True,
                 clamp=True,
             )
 
@@ -147,7 +147,7 @@ with tab3:
             # Update UI
             # Convert frame BGR to RGB for Streamlit
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            video_placeholder.image(frame_rgb, channels="RGB", use_container_width=True)
+            video_placeholder.image(frame_rgb, channels="RGB", use_column_width=True)
 
             veh_metric.metric("Total Vehicles", str(vehicle_count))
 

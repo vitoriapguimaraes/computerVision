@@ -1,7 +1,7 @@
 import cv2
 import streamlit as st
 import numpy as np
-from utils.config import DEMO_DROWSINESS
+from settings.config import DEMO_DROWSINESS
 from utils.ui import configure_page, render_sidebar_info, get_image_base64, render_instructions_tab
 
 configure_page("Road Safety", "🛣️")

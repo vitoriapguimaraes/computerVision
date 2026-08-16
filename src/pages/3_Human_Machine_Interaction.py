@@ -7,7 +7,7 @@ from utils.ui import (
     render_instructions_tab
 )
 from streamlit_webrtc import webrtc_streamer, RTCConfiguration
-from utils.config import DEMO_TRACKING
+from settings.config import DEMO_TRACKING
 
 configure_page("Gesture Tracking", "🤚")
 render_sidebar_info()

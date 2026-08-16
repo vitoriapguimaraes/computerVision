@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from utils.config import MODEL_CIFAR10
+from settings.config import MODEL_CIFAR10
 @st.cache_resource(show_spinner="Loading Keras Model...")
 def load_cifar10_model():
     """Load the pre-trained CIFAR-10 classification model."""
