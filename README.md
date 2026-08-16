@@ -1,14 +1,7 @@
-# 👁️‍🗨️ Computer Vision Hub
+# Computer Vision Hub
 
 > **The Frontier of Computational Perception.**  
 > A unified Operations Center showcasing projects focused on image processing, object detection, and interactive recognition using OpenCV, MediaPipe, and Deep Learning.
-
-<div align="left">
-  <a href="https://www.linkedin.com/in/vitoriapguimaraes/"><img src="https://img.shields.io/badge/-LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
-  <a href="mailto:vipistori@gmail.com"><img src="https://img.shields.io/badge/-Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/></a>
-  <a href="https://github.com/vitoriapguimaraes/vitoriapguimaraes/blob/main/RESUME.md"><img src="https://img.shields.io/badge/Resume%20(Markdown)-gray?style=for-the-badge" alt="Resume ATS md"/></a>
-  <a href="https://github.com/vitoriapguimaraes/vitoriapguimaraes/blob/main/Vitoria_Pistori_RESUME.pdf"><img src="https://img.shields.io/badge/Resume%20(PDF)-gray?style=for-the-badge" alt="Resume ATS PDF"/></a>
-</div>
 
 ![System Demonstration](https://github.com/vitoriapguimaraes/computerVision/blob/main/src/assets/demos/streamlit_app_painel_screen.png)
 
