@@ -7,3 +7,12 @@ __pycache__
 computer_vision_hub.egg-info
 .env
 .venv
+projects/**/*.jpg
+projects/**/*.jpeg
+projects/**/*.png
+projects/**/*.mp4
+projects/**/*.mov
+projects/**/*.pt
+projects/**/*.h5
+projects/**/*.dat
+projects/**/*.traineddata

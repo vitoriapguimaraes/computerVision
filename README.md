@@ -10,7 +10,7 @@
   <a href="https://github.com/vitoriapguimaraes/vitoriapguimaraes/blob/main/doc/Vitoria_Pistori_RESUME.pdf"><img src="https://img.shields.io/badge/Resume%20(PDF)-gray?style=for-the-badge" alt="Resume ATS PDF"/></a>
 </div>
 
-![System Demonstration](https://github.com/vitoriapguimaraes/computerVision/blob/main/streamlit_app/assets/demos/streamlit_app_painel_screen.png)
+![System Demonstration](https://github.com/vitoriapguimaraes/computerVision/blob/main/src/assets/demos/streamlit_app_painel_screen.png)
 
 ## Table of Contents
 
@@ -95,18 +95,11 @@ computerVision/
 └── README.md
 ```
 
-## Status Legend
-
-- ✅ **Completed**: Functional current version delivered.
-- 🛠️ **In Maintenance**: Adjustments and corrections in progress.
-- 🚧 **In Development**: New functionalities being implemented.
-
 ## Status & Roadmap
 
 ✅ **Completed**: The core Streamlit Hub integrating the main computer vision models is fully operational.
-🚧 **In Development**:
 
-- **Project 7 (Face Recognition):** Currently under construction and not yet integrated into the Streamlit Hub.
+🚧 **In Development**: **Project 7 (Face Recognition):** Currently under construction and not yet integrated into the Streamlit Hub.
 
 ## Areas of Expertise
 
