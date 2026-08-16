@@ -15,4 +15,4 @@ aiortc
 av
 ultralytics
 pytesseract
-deepface
+deepface==0.0.92

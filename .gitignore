@@ -7,7 +7,6 @@ __pycache__
 computer_vision_hub.egg-info
 .env
 .venv
-src/assets/images_face_analysis/create_model
 projects/**/*.jpg
 projects/**/*.jpeg
 projects/**/*.png
